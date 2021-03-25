@@ -5,14 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     ListView movieListView;
     private MovieAdapter movieAdapter;
     EditText movieSearch;
+    Dialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         movieSearch = findViewById(R.id.movieSearch);
 
         getAllMovies();
-
     }
 
     private void getAllMovies() {
@@ -62,6 +70,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                     @Override
                     public void afterTextChanged(Editable s) {
+                    }
+                });
+
+                movieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+                        Movie movie = moviesArrayList.get(position);
+                        Toast.makeText(MainActivity.this, movie.getMName(),
+                                Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        ViewGroup viewGroup = findViewById(android.R.id.content);
+                        View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.movie_dialog, viewGroup, false);
+                        builder.setView(dialogView);
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
                     }
                 });
 

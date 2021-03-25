@@ -68,14 +68,14 @@ public class MovieAdapter extends ArrayAdapter<Movie> implements Filterable {
         TextView deeRating = (TextView) listItem.findViewById(R.id.deeRating);
         deeRating.setText(currentMovie.getMDeeRating());
 
+
+
         return listItem;
     }
 
     @Override
     public Filter getFilter() {
         Filter filter = new Filter() {
-
-
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
 
@@ -91,7 +91,6 @@ public class MovieAdapter extends ArrayAdapter<Movie> implements Filterable {
                     for(Movie movie:moviesList){
                         if(movie.getMName().toLowerCase().contains(searchStr)){
                             resultsModel.add(movie);
-
                         }
                         filterResults.count = resultsModel.size();
                         filterResults.values = resultsModel;
@@ -110,6 +109,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> implements Filterable {
         };
         return filter;
     }
+
 }
 
 

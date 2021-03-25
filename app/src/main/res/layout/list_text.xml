@@ -45,4 +45,6 @@
         android:paddingLeft="10dip"
         android:textStyle="bold"
         android:layout_below="@+id/ollRating"/>
+
+
 </RelativeLayout>

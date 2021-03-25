@@ -15,4 +15,5 @@
         android:layout_height="match_parent"
         android:id="@+id/movieListView"
         android:layout_below="@id/movieSearch"/>
+
 </RelativeLayout>
