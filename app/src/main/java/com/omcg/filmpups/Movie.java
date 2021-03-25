@@ -7,15 +7,17 @@ import lombok.Setter;
 @Setter
 public class Movie {
 
-    // Store the name of the movie
     private String mName;
-    // Store the release year of the movie
     private String mYear;
+    private String mOllRating;
+    private String mDeeRating;
 
     // Constructor that is used to create an instance of the Movie object
-    public Movie(String mName, String mRelease) {
+    public Movie(String mName, String mRelease, String mOllRating, String mDeeRating) {
         this.mName = mName;
         this.mYear = mRelease;
+        this.mOllRating = mOllRating;
+        this.mDeeRating = mDeeRating;
     }
 
 }

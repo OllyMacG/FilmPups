@@ -19,5 +19,30 @@
         android:paddingTop="15dip"
         android:paddingBottom="15dip"
         android:paddingLeft="10dip"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_below="@+id/filmName"/>
+
+    <TextView
+        android:id="@+id/ollRating"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dip"
+        android:textColor="#000000"
+        android:paddingTop="15dip"
+        android:paddingBottom="15dip"
+        android:paddingLeft="10dip"
+        android:textStyle="bold"
+        android:layout_below="@+id/filmYear"/>
+
+    <TextView
+        android:id="@+id/deeRating"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dip"
+        android:textColor="#000000"
+        android:paddingTop="15dip"
+        android:paddingBottom="15dip"
+        android:paddingLeft="10dip"
+        android:textStyle="bold"
+        android:layout_below="@+id/ollRating"/>
 </RelativeLayout>

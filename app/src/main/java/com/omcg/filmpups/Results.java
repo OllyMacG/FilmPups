@@ -13,9 +13,17 @@ public class Results {
     @SerializedName("year")
     private String filmYear;
 
-    public Results(String name, String year) {
+    @SerializedName("oll_rating")
+    private String ollRating;
+
+    @SerializedName("dee_rating")
+    private String deeRating;
+
+    public Results(String name, String year, String ollRating, String deeRating) {
         this.filmName = name;
         this.filmYear = year;
+        this.ollRating = ollRating;
+        this.deeRating = deeRating;
     }
 
 
