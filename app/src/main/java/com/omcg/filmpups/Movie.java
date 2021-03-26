@@ -7,13 +7,15 @@ import lombok.Setter;
 @Setter
 public class Movie {
 
+    private int id;
     private String mName;
     private String mYear;
     private String mOllRating;
     private String mDeeRating;
 
     // Constructor that is used to create an instance of the Movie object
-    public Movie(String mName, String mRelease, String mOllRating, String mDeeRating) {
+    public Movie(int id, String mName, String mRelease, String mOllRating, String mDeeRating) {
+        this.id = id;
         this.mName = mName;
         this.mYear = mRelease;
         this.mOllRating = mOllRating;

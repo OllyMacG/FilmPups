@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FilmPups</string>
+    <string name="dialog_header">Rate Film</string>
+    <string name="dee_rating">Rating For Dee</string>
+    <string name="oll_rating">Rating For Oll</string>
+    <string name="rate_button">RATE</string>
 </resources>
