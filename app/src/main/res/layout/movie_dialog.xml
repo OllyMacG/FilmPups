@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             android:text="@string/rate_button"
             android:textColor="#FFF"
             android:onClick="onClickRating" />

@@ -2,6 +2,7 @@ package com.omcg.filmpups;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,6 @@ public class MovieAdapter extends ArrayAdapter<Movie> implements Filterable {
     private Context mContext;
     private List<Movie> moviesList = new ArrayList<>();
     private List<Movie> filteredMovieList = new ArrayList<>();
-
 
     public MovieAdapter(@NonNull Context context, ArrayList<Movie> list) {
         super(context, 0, list);
@@ -63,12 +63,10 @@ public class MovieAdapter extends ArrayAdapter<Movie> implements Filterable {
         year.setText(currentMovie.getMYear());
 
         TextView ollRating = (TextView) listItem.findViewById(R.id.ollRating);
-        ollRating.setText(currentMovie.getMOllRating());
+        ollRating.setText("Oll Rating: " + currentMovie.getMOllRating());
 
         TextView deeRating = (TextView) listItem.findViewById(R.id.deeRating);
-        deeRating.setText(currentMovie.getMDeeRating());
-
-
+        deeRating.setText("Dee Rating: " + currentMovie.getMDeeRating());
 
         return listItem;
     }
@@ -80,27 +78,25 @@ public class MovieAdapter extends ArrayAdapter<Movie> implements Filterable {
             protected FilterResults performFiltering(CharSequence constraint) {
 
                 FilterResults filterResults = new FilterResults();
-                if(constraint == null || constraint.length() == 0){
+                if (constraint == null || constraint.length() == 0) {
                     filterResults.count = moviesList.size();
                     filterResults.values = moviesList;
 
-                }else{
+                } else {
                     ArrayList<Movie> resultsModel = new ArrayList<>();
                     String searchStr = constraint.toString().toLowerCase();
 
-                    for(Movie movie:moviesList){
-                        if(movie.getMName().toLowerCase().contains(searchStr)){
+                    for (Movie movie : moviesList) {
+                        if (movie.getMName().toLowerCase().contains(searchStr)) {
                             resultsModel.add(movie);
                         }
                         filterResults.count = resultsModel.size();
                         filterResults.values = resultsModel;
                     }
-
-
                 }
-
                 return filterResults;
             }
+
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 filteredMovieList = (ArrayList<Movie>) results.values;

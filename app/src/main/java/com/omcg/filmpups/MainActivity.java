@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 List<Results> moviesList = response.body();
                 ArrayList<Movie> moviesArrayList = new ArrayList<>();
                 for (int i = 0; i < moviesList.size(); i++) {
-                    moviesArrayList.add(new Movie(moviesList.get(i).getId(), moviesList.get(i).getFilmName(), moviesList.get(i).getFilmYear(), "Olls Rating: " + moviesList.get(i).getOllRating(), "Dees Rating: " + moviesList.get(i).getDeeRating()));
+                    moviesArrayList.add(new Movie(moviesList.get(i).getId(), moviesList.get(i).getFilmName(), moviesList.get(i).getFilmYear(), moviesList.get(i).getOllRating(), moviesList.get(i).getDeeRating()));
                 }
                 movieAdapter = new MovieAdapter(getApplicationContext(), moviesArrayList);
                 movieSearch.addTextChangedListener(new TextWatcher() {
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         movieAdapter.getFilter().filter(s);
-
                     }
 
                     @Override
@@ -82,10 +82,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Movie movie = moviesArrayList.get(position);
+                        Movie movie = movieAdapter.getItem(position);
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        Toast.makeText(MainActivity.this, movie.getMDeeRating(),
-                                Toast.LENGTH_SHORT).show();
                         ViewGroup viewGroup = findViewById(android.R.id.content);
                         View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.movie_dialog, viewGroup, false);
 
@@ -96,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
                         Button rateButton = (Button) dialogView.findViewById
                                 (R.id.rateButton);
 
-//                        deeRatingEdit.setText(movie.getMDeeRating());
-//                        ollRatingEdit.setText(movie.getMOllRating());
+                        deeRatingEdit.setText(movie.getMDeeRating());
+                        ollRatingEdit.setText(movie.getMOllRating());
                         deeRatingEdit.addTextChangedListener(new CheckPercentage());
                         ollRatingEdit.addTextChangedListener(new CheckPercentage());
 
@@ -105,8 +103,12 @@ public class MainActivity extends AppCompatActivity {
                         builder.setView(dialogView);
                         AlertDialog alertDialog = builder.create();
 
+                        AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
+
+
                         rateButton.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
+                                v.startAnimation(buttonClick);
                                 putMovieRating(movie, deeRatingEdit.getText().toString(), ollRatingEdit.getText().toString());
                                 alertDialog.dismiss();
                                 finish();
@@ -158,10 +160,12 @@ public class MainActivity extends AppCompatActivity {
 
     class CheckPercentage implements TextWatcher {
         public void afterTextChanged(Editable s) {
-            try {
-                if (Integer.parseInt(s.toString()) > 100)
-                    s.replace(0, s.length(), "100");
-            } catch (NumberFormatException nfe) {
+            if (!s.toString().equals("?")) {
+                try {
+                    if (Integer.parseInt(s.toString()) > 100)
+                        s.replace(0, s.length(), "100");
+                } catch (NumberFormatException nfe) {
+                }
             }
         }
 
@@ -178,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void putMovieRating(Movie movie, String deeRating, String ollRating) {
         Rating rating = new Rating(deeRating, ollRating);
-        Call<ResponseBody> call = RetrofitClient.getInstance().getMyApi().putRating(movie.getId(),rating);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getMyApi().putRating(movie.getId(), rating);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

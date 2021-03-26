@@ -13,9 +13,9 @@ public class Rating {
     @SerializedName("dee_rating")
     private String deeRating;
 
-    public Rating(String ollRating, String deeRating) {
-        this.ollRating = ollRating;
+    public Rating(String deeRating, String ollRating) {
         this.deeRating = deeRating;
+        this.ollRating = ollRating;
     }
 }
 
