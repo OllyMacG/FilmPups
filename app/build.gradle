@@ -33,6 +33,7 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.victor:lib:1.0.4'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.18'
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.18'
 

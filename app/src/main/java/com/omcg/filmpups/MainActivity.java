@@ -23,6 +23,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.victor.loading.rotate.RotateLoading;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         centerTitle();
 
         movieListView = findViewById(R.id.movieListView);
@@ -53,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getAllMovies() {
+        RotateLoading rotateLoading = findViewById(R.id.rotateloading);
+        rotateLoading.start();
         Call<List<Results>> call = RetrofitClient.getInstance().getMyApi().getMovies();
         call.enqueue(new Callback<List<Results>>() {
             @Override
@@ -119,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+                rotateLoading.stop();
                 movieListView.setAdapter(movieAdapter);
 
             }

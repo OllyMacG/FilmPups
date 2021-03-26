@@ -6,6 +6,13 @@
     android:padding="8dp"
     tools:context=".MainActivity">
 
+    <com.victor.loading.rotate.RotateLoading
+        android:id="@+id/rotateloading"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"/>
+
+
     <EditText
         android:id="@+id/movieSearch"
         android:layout_width="match_parent"
