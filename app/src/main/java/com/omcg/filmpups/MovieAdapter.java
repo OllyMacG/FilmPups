@@ -11,13 +11,11 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 public class MovieAdapter extends ArrayAdapter<Movie> implements Filterable {
 
