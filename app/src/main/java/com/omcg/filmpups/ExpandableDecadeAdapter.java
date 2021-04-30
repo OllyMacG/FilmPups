@@ -6,24 +6,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
 public class ExpandableDecadeAdapter extends BaseExpandableListAdapter {
     private Context _context;
     private List<String> _listDataHeader;
     private HashMap<String, ArrayList<Movie>> _listMovieChild;
+    private HashMap<String, ArrayList<Movie>> _filteredMovieChild;
 
     public ExpandableDecadeAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, ArrayList<Movie>> listMovieData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listMovieChild = listMovieData;
+        this._filteredMovieChild = listMovieData;
     }
 
     @Override
@@ -105,6 +106,17 @@ public class ExpandableDecadeAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public void filterData(String query){
+        query = query.toLowerCase();
+        for(String decade: _listDataHeader){
+            if(_listMovieChild.get(decade).contains(query)){
+
+            }
+        }
+
+
     }
 
 }

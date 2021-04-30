@@ -15,6 +15,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,17 +32,13 @@ import retrofit2.Response;
 
 
 public class MainActivity extends AppCompatActivity {
-
     ExpandableListView expandableListView;
     ExpandableDecadeAdapter expandableDecadeAdapter;
     List<String> listDataHeader;
     HashMap<String, ArrayList<Movie>> listDataChild;
-
-//    ListView movieListView;
-
-    private MovieAdapter movieAdapter;
-    EditText movieSearch;
-
+    Button addMovieButton;
+    EditText addMovieName, addMovieYear;
+    SearchView movieSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +47,46 @@ public class MainActivity extends AppCompatActivity {
 
         centerTitle();
         expandableListView = findViewById(R.id.expandableDecadeView);
-//        movieListView = findViewById(R.id.movieListView);
         movieSearch = findViewById(R.id.movieSearch);
+        addMovieButton = (Button) findViewById(R.id.addMovie);
+        addMovieButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            ViewGroup viewGroup = findViewById(android.R.id.content);
+            View addMovieView = LayoutInflater.from(v.getContext()).inflate(R.layout.add_movie_dialog, viewGroup, false);
+
+             addMovieName = (EditText) addMovieView.findViewById
+                    (R.id.addMovieName);
+
+             addMovieYear = (EditText) addMovieView.findViewById
+                    (R.id.addMovieYear);
+
+            Button postMovieButton = (Button) addMovieView.findViewById
+                    (R.id.postMovieButton);
+
+
+            builder.setView(addMovieView);
+            AlertDialog alertDialog = builder.create();
+
+            AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
+
+            postMovieButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if(CheckAllFields()){
+                        v.startAnimation(buttonClick);
+                        postMovie(addMovieName.getText().toString(), addMovieYear.getText().toString());
+                        alertDialog.dismiss();
+                        finish();
+                        startActivity(getIntent());
+                    }
+                }
+            });
+            alertDialog.show();
+        });
 
         getAllMovies();
     }
 
     private void getAllMovies() {
-        RotateLoading rotateLoading = findViewById(R.id.rotateloading);
-        rotateLoading.start();
         Call<List<Results>> call = RetrofitClient.getInstance().getMyApi().getMovies();
         call.enqueue(new Callback<List<Results>>() {
             @Override
@@ -91,24 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 expandableDecadeAdapter = new ExpandableDecadeAdapter(getApplicationContext(), listDataHeader, listDataChild);
-//                movieAdapter = new MovieAdapter(getApplicationContext(), moviesArrayList);
-//                movieSearch.addTextChangedListener(new TextWatcher() {
-//                    @Override
-//                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                    }
-//
-//                    @Override
-//                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                        movieAdapter.getFilter().filter(s);
-//                    }
-//
-//                    @Override
-//                    public void afterTextChanged(Editable s) {
-//                    }
-//                });
-
                 expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
                     @Override
                     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                         Movie movie = expandableDecadeAdapter.getChild(groupPosition, childPosition);
@@ -152,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                rotateLoading.stop();
                 expandableListView.setAdapter(expandableDecadeAdapter);
 
             }
@@ -164,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
     }
 
     private void centerTitle() {
@@ -220,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(MainActivity.this, "Film is rated",
+                Toast.makeText(MainActivity.this, movie.getMName().concat(" is rated ").concat(deeRating + " for Dee and " + ollRating + " for Oll"),
                         Toast.LENGTH_SHORT).show();
             }
 
@@ -230,4 +241,43 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    private void postMovie(String movieName, String movieYear) {
+        AddMovie movie = new AddMovie(movieName, movieYear);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getMyApi().postMovie(movie);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, movieName.concat(" added"),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, movieName.concat(" was not added!"),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+            }
+        });
+
+    }
+
+    private boolean CheckAllFields() {
+        if (addMovieName.length() == 0) {
+            addMovieName.setError("This field is required");
+            return false;
+        }
+
+        if (addMovieYear.length() == 0) {
+            addMovieYear.setError("This field is required");
+            return false;
+        }
+
+
+        // after all validation return true.
+        return true;
+    }
+
 }

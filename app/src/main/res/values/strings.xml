@@ -5,5 +5,10 @@
     <string name="oll_rating">Rating For Oll:</string>
     <string name="rate_button">RATE</string>
     <string name="search_text">Search here</string>
+    <string name="add_movie_button">Add New Movie</string>
+    <string name="add_movie_name">Movie Name</string>
+    <string name="add_movie_year">Movie Year</string>
+    <string name="add_movie_oll_rating">Oll Rating</string>
+    <string name="add_movie_dee_rating">Dee Rating</string>
 
 </resources>

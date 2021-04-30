@@ -2,34 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="#f4f4f4" >
+    android:background="#f4f4f4"
+    android:orientation="vertical">
 
-    <com.victor.loading.rotate.RotateLoading
-        android:id="@+id/rotateloading"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true"/>
+    <Button
+        android:id="@+id/addMovie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorPrimary"
+        android:onClick="addMovieDialog"
+        android:text="@string/add_movie_button"
+        android:textColor="#FFF" />
 
-    <EditText
+    <SearchView
         android:id="@+id/movieSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/search_text" />
+        android:layout_alignParentLeft="true"
+        android:iconifiedByDefault="false" />
 
     <ExpandableListView
         android:id="@+id/expandableDecadeView"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="0.5dp"
-        />
-
-    <ListView
-        android:id="@+id/movieListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/movieSearch" />
+        android:divider="@android:color/white"
+        android:dividerHeight="1dp"
+        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />
 
 </LinearLayout>

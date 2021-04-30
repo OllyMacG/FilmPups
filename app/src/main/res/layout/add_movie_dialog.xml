@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_header"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        <TextView
+            android:text="@string/add_movie_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dip"
+            android:textColor="#000000"
+            android:paddingLeft="10dip"
+            android:textStyle="bold"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:id="@+id/addMovieName"
+            android:maxLength="20" />
+        <TextView
+            android:text="@string/add_movie_year"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dip"
+            android:textColor="#000000"
+            android:paddingLeft="10dip"
+            android:textStyle="bold"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/addMovieYear"
+            android:maxLength="4"
+            />
+        <Button
+            android:id="@+id/postMovieButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/add_movie_button"
+            android:textColor="#FFF"
+            android:onClick="addMovie" />
+    </LinearLayout>
+</LinearLayout>
